@@ -19,16 +19,26 @@
 3. [MINILIBX](#minilibx)
 	1. [Qu'est-ce que la MiniLibX?](#quest-ce-que-la-minilibx)
 		- [Pourquoi on l'utilise dans so_long ?](#pourquoi-on-lutilise-dans-so_long-)
-	2. [Ce que la MiniLibX permet de faire (index des fonctions)](#ce-que-la-minilibx-permet-de-faire-index-des-fonctions)
-		- [Créer une fenêtre](#créer-une-fenêtre)
-		- [Charger des images](#charger-des-images)
-		- [Afficher des images dans la fenêtre](#afficher-des-images-dans-la-fenêtre)
-		- [Gérer les événements](#gérer-les-événements)
-		- [Lancer la boucle graphique](#lancer-la-boucle-graphique)
-	3. [Logique de fonctionnement](#logique-de-fonctionnement)
+	2. [Logique de fonctionnement](#logique-de-fonctionnement)
 		- [Application concrète dans so_long](#application-concrète-dans-so_long)
-	4. [Points importants à retenir](#points-importants-à-retenir)
-	5. [Résumé MiniLibX](#résumé-minilibx)
+	3. [Points importants à retenir](#points-importants-à-retenir)
+	4. [Résumé MiniLibX](#résumé-minilibx)
+4. [Fonctions MLX utilisées](#fonctions-mlx-utilisées)
+	1. [Initialisation graphique](#1-initialisation-graphique)
+		- [mlx_init()](#mlx_init)
+	2. [Création de la fenêtre](#2-création-de-la-fenêtre)
+		- [mlx_new_window()](#mlx_new_windowmlx-width-height-title)
+	3. [Chargement des sprites](#3-chargement-des-sprites)
+		- [mlx_xpm_file_to_image()](#mlx_xpm_file_to_image)
+	4. [Affichage d'une image](#4-affichage-dune-image)
+		- [mlx_put_image_to_window()](#mlx_put_image_to_window)
+	5. [Gestion du clavier](#5-gestion-du-clavier)
+		- [mlx_key_hook()](#mlx_key_hook)
+	6. [Fermer avec la croix](#6-fermer-avec-la-croix)
+		- [mlx_hook()](#mlx_hookwin-17-0-close_game-data)
+	7. [Lancer la boucle graphique](#7-lancer-la-boucle-graphique)
+		- [mlx_loop()](#mlx_loop)
+	8. [Clean exit](#8-clean-exit-important)
 
 # Introduction
 ## But
@@ -198,47 +208,18 @@ Elle est volontairement minimaliste pour nous obliger à comprendre la logique d
 Dans so_long, la MiniLibX sert à :
 
 - afficher la map dans une fenêtre
-- afficher des sprites (mur, sol, joueur, collectibles, exit)
-- gérer les touches du clavier
+- afficher les différents éléments du jeu avec des textures :
+  - murs
+  - sol
+  - joueur
+  - collectibles
+  - sortie
+- détecter les touches du clavier pour déplacer le joueur
 - fermer le programme proprement
 
 ---
 
-## Ce que la MiniLibX permet de faire (index des fonctions)
-
-### Créer une fenêtre
-[`mlx_new_window.c`](./minilibx-linux/mlx_new_window.c)
-
-crée une surface d’affichage
-
-### Charger des images
-[`mlx_xpm_file_to_image`](./minilibx-linux/mlx_xpm.c)
-
-transformer un fichier .xpm en image affichable
-
-### Afficher des images dans la fenêtre
-[`mlx_put_image_to_window`](./minilibx-linux/mlx_put_image_to_window.c)
-
-dessiner un sprite à une position donnée en pixels.
-
-### Gérer les événements
-[`mlx_key_hook`](./minilibx-linux/mlx_key_hook.c) / [`mlx_hook`](./minilibx-linux/mlx_hook.c)
-
-- détecter les touches clavier
-- détecter le clic sur la croix de la fenêtre
-
-### Lancer la boucle graphique
-[`mlx_loop`](./minilibx-linux/mlx_loop.c)
-
-le programme reste en attente d’événements, c’est le “cœur” du programme graphique.
-
 ## Logique de fonctionnement
-
-Avec la MiniLibX, un programme ne s’exécute plus de manière linéaire.
-
-> **Étapes :** Initialisation MLX → Fenêtre → Images → Hooks → Boucle
-
-Ensuite, ce sont les événements qui déclenchent les actions.
 
 ### Application concrète dans so_long
 À chaque déplacement du joueur :
@@ -248,6 +229,8 @@ Ensuite, ce sont les événements qui déclenchent les actions.
 
 La MiniLibX ne met pas à jour l’écran automatiquement.
 C’est au programme de redessiner l’affichage.
+Le jeu n’est pas en temps réel :  
+- l’écran est mis à jour uniquement lors d’un déplacement.
 
 ## Points importants à retenir
 
@@ -271,3 +254,141 @@ La MiniLibX est une bibliothèque graphique minimaliste qui permet de :
 Elle sert de lien entre la logique du jeu et son affichage à l’écran.
 
 ---
+# Fonctions MLX utilisées
+## 1. Initialisation graphique
+
+### mlx_init()
+[`mlx_init`](./minilibx-linux/mlx_init.c)
+
+**Rôle :**
+Initialise la connexion avec le serveur graphique (X11).
+
+**Ce que fait la fonction en interne :**
+- ouvre la connexion avec le display (`XOpenDisplay`)
+- récupère l’écran, la profondeur de couleur, etc.
+- stocke tout dans une structure mlx
+
+**Pourquoi c’est indispensable :**
+Toutes les autres fonctions MLX ont besoin de ce pointeur.
+
+C’est le point de départ du programme graphique
+
+## 2. Création de la fenêtre
+
+### mlx_new_window(mlx, width, height, title)
+[`mlx_new_window.c`](./minilibx-linux/mlx_new_window.c)
+
+**Rôle :**
+Créer une fenêtre à l’écran.
+
+**En interne :**
+- crée une vraie fenêtre X11
+- configure les événements qu’elle peut recevoir
+- l’affiche à l’écran
+
+**Dans so_long :**
+
+la taille dépend de la map :
+
+<pre>
+width = map_width * TILE_SIZE;
+height = map_height * TILE_SIZE;
+</pre>
+
+## 3. Chargement des sprites
+### mlx_xpm_file_to_image()
+[`mlx_xpm_file_to_image`](./minilibx-linux/mlx_xpm.c)
+
+**Rôle :**
+Convertir un fichier `.xpm` en image MLX.
+
+**En interne :**
+
+- lit le fichier
+- transforme les caractères en pixels
+- stocke le tout dans une image utilisable
+
+**Dans so_long :**
+
+appel UNE SEULE FOIS au début pour :
+- mur
+- sol
+- player
+- collectible
+- exit
+
+Ensuite on réutilise les pointeurs.
+
+## 4. Affichage d'une image
+### mlx_put_image_to_window()
+[`mlx_put_image_to_window`](./minilibx-linux/mlx_put_image_to_window.c)
+
+**Rôle :**
+Dessiner une image dans la fenêtre.
+
+**En interne :**
+Copie les pixels de l’image vers la fenêtre.
+
+**Dans so_long :**
+C’est ELLE qui affiche la map
+
+<pre>
+mlx_put_image_to_window(mlx, win, img, x * TILE, y * TILE);
+</pre>
+
+## 5. Gestion du clavier
+### mlx_key_hook()
+[`mlx_key_hook`](./minilibx-linux/mlx_key_hook.c)
+
+**Rôle :**
+Appeler une fonction quand une touche est pressée.
+
+**En interne :**
+- écoute les événements clavier
+- appelle ta fonction avec le keycode
+
+**Dans so_long :**
+déplacer le joueur
+
+## 6. Fermer avec la croix
+### mlx_hook(win, 17, 0, close_game, data)
+[`mlx_hook`](./minilibx-linux/mlx_hook.c)
+
+**Rôle :**
+Capturer l’événement de fermeture de la fenêtre.
+
+**Pourquoi 17 :**
+C’est l’événement X11 DestroyNotify
+
+## 7. Lancer la boucle graphique
+### mlx_loop()
+[`mlx_loop`](./minilibx-linux/mlx_loop.c)
+
+**Rôle :**
+Lancer la boucle infinie qui attend les événements
+
+**En interne :**
+<pre>
+while (1)
+{
+    attendre un événement
+    exécuter le hook associé
+}
+</pre>
+
+**Sans elle:**
+- la fenêtre se ferme instantanément.
+
+## 8. Clean exit (important)
+
+[`mlx_destroy_image`](./minilibx-linux/mlx_destroy_image.c)
+
+- Libère les images.
+
+[`mlx_destroy_window`](./minilibx-linux/mlx_destroy_window.c)
+
+- Détruit la fenêtre.
+
+[`mlx_destroy_display`](./minilibx-linux/mlx_destroy_display.c) (Linux)
+
+- Ferme la connexion avec X11
