@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   verify_ber.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 23:14:04 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:11:28 by cmauley          ###   ########.fr       */
+/*   Created: 2026/02/24 19:06:40 by cmauley           #+#    #+#             */
+/*   Updated: 2026/02/24 19:23:57 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-int	main(int argc, char **argv)
+/**
+ * @brief verifie que le fichier est bien un .ber
+ */
+int	verify_ber(char *path)
 {
-	int		fd;
-	t_game	game;
+	int	len;
 
-	if (argc != 2)
-		return (write_error("Usage: ./so_long map.ber"));
-
-	if (verify_ber(argv[1]))
-		return (1);
-
-	if (open_map(argv[1], &fd))
-		return (1);
-
-	if (read_map(fd, &game))
-		return (1);
-
+	if (!path)
+		return (write_error("Invalid file path"));
+	len = ft_strlen(path);
+	if (len < 5)
+		return (write_error("Map must end with .ber"));
+	if (path[len - 4] != '.'
+		|| path[len - 3] != 'b'
+		|| path[len - 2] != 'e'
+		|| path[len - 1] != 'r')
+		return (write_error("Map must have .ber extension"));
 	return (0);
 }

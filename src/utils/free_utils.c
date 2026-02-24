@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 23:14:04 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:11:28 by cmauley          ###   ########.fr       */
+/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
+/*   Updated: 2026/02/24 18:54:46 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-int	main(int argc, char **argv)
+void	free_tab(char **tab)
 {
-	int		fd;
-	t_game	game;
+	int	i;
 
-	if (argc != 2)
-		return (write_error("Usage: ./so_long map.ber"));
-
-	if (verify_ber(argv[1]))
-		return (1);
-
-	if (open_map(argv[1], &fd))
-		return (1);
-
-	if (read_map(fd, &game))
-		return (1);
-
-	return (0);
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

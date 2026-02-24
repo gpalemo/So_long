@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 23:14:04 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:11:28 by cmauley          ###   ########.fr       */
+/*   Created: 2026/02/24 19:02:43 by cmauley           #+#    #+#             */
+/*   Updated: 2026/02/24 19:36:45 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-int	main(int argc, char **argv)
+int	read_map(int fd, t_game *game)
 {
-	int		fd;
-	t_game	game;
+	char	*content;
 
-	if (argc != 2)
-		return (write_error("Usage: ./so_long map.ber"));
-
-	if (verify_ber(argv[1]))
-		return (1);
-
-	if (open_map(argv[1], &fd))
-		return (1);
-
-	if (read_map(fd, &game))
-		return (1);
-
+	game->map = NULL;
+	if (read_file_to_string(fd, &content))
+		return (write_error("Empty map or read failed"));
+	if (split_and_store(game, content))
+		return (write_error("Split failed"));
+	if (validate_shape(game))
+		return (free_tab(game->map), write_error("Invalid map shape"));
 	return (0);
 }
+
+
+
+
