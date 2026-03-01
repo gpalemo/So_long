@@ -6,28 +6,20 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 23:14:04 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:11:28 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 18:09:14 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
-	int		fd;
 	t_game	game;
 
-	if (argc != 2)
+	if (ac != 2)
 		return (write_error("Usage: ./so_long map.ber"));
-
-	if (verify_ber(argv[1]))
+	if (parse(&game, av[1] == 1))
 		return (1);
-
-	if (open_map(argv[1], &fd))
-		return (1);
-
-	if (read_map(fd, &game))
-		return (1);
-
+	// init mlx + game loop
 	return (0);
 }

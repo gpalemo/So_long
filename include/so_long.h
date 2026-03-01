@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 22:07:13 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:39:05 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 18:12:53 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,28 @@ typedef struct s_game
 }			t_game;
 
 // ====== PARSING ======
+int		parse(t_game *game, char *path);
+
+// --- file ---
 int		verify_ber(char *path);
 int		open_map(char *path, int *fd);
-int		read_map(int fd, t_game *g);
-int		validate_shape(t_game *game);
+
+// --- read ---
+int		read_map(int fd, t_game *game);
 int		read_file_to_string(int fd, char **out);
 int		split_and_store(t_game *game, char *content);
+
+// --- validate ---
+int		validate_shape(t_game *game);
+int		check_char(char **map);
+int		wall_check(char **map);
+int		check_nb_char_and_stock_coll(t_game *game);
+int		find_player(t_game *game);
 
 // ====== UTILS ======
 void	free_tab(char **tab);
 int		write_error(char *msg);
+int		fail_map(t_game *g, char *msg);
 
 
 #endif

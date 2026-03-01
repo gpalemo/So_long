@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:03:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/02/24 19:35:53 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 18:19:41 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ static int	count_height(char **map);
 static int	check_no_empty_lines(char **map);
 static int	check_rectangular(char **map, int *width);
 
+/**
+ * @brief vérifie que la map est rectangulaire, sans lignes vides, et stocke ses dimensions
+ */
 int	validate_shape(t_game *game)
 {
 	if (check_no_empty_lines(game->map))
@@ -26,6 +29,9 @@ int	validate_shape(t_game *game)
 	return (0);
 }
 
+/**
+ * @brief retourne le nombre de lignes de la map (donc la hauteur aussi)
+ */
 static int	count_height(char **map)
 {
 	int	i;
@@ -36,6 +42,9 @@ static int	count_height(char **map)
 	return (i);
 }
 
+/**
+ * @brief retourne 1 si une ligne vide est trouvée dans la map
+ */
 static int	check_no_empty_lines(char **map)
 {
 	int	i;
@@ -50,6 +59,9 @@ static int	check_no_empty_lines(char **map)
 	return (0);
 }
 
+/**
+ * @brief vérifie que toutes les lignes ont la même longueur et stocke la largeur
+ */
 static int	check_rectangular(char **map, int *width)
 {
 	int	i;
