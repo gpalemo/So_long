@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/16 23:41:02 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/17 19:11:13 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	del(lst->content);
+	free(lst);
 }
 
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
+/*void del_content(void *content)
 {
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
+    free(content);
 }
+
+int main ()
+{
+	char *str = ft_strdup("cacaboudin");
+	t_list *elem = ft_lstnew(str);
+	printf("avant %s\n", (char *)elem->content);
+	ft_lstdelone(elem, del_content);
+	printf("apres %s\n", (char *)elem->content);
+}*/

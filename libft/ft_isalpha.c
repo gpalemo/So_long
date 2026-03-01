@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/09/30 17:28:17 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/08 19:21:50 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+int	ft_isalpha(int c)
 {
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
+	if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
 	{
-		free(tab[i]);
-		i++;
+		return (1);
 	}
-	free(tab);
-}
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
-{
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
+	else
+	{
+		return (0);
+	}
 }

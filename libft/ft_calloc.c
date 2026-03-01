@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/06 22:28:06 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/08 19:20:19 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int	i;
+	unsigned char	*tmp;
+	size_t			total;
 
+	tmp = 0;
+	total = count * size;
+	tmp = malloc(total);
+	if (!tmp)
+		return (NULL);
+	ft_bzero(tmp, total);
+	return (tmp);
+}
+/*int	main()
+{
+	int *tab;
+	int i;
+
+	tab = ft_calloc(5, sizeof(int));
 	if (!tab)
-		return ;
+		return(1);
 	i = 0;
-	while (tab[i])
+	while (i < 5)
 	{
-		free(tab[i]);
+		printf("%d\n", tab[i]);
 		i++;
 	}
 	free(tab);
-}
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
-{
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
-}
+	return (0);
+}*/

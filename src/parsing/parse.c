@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 17:30:35 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 18:12:32 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 21:45:27 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	parse(t_game *game, char *path)
 		return (fail_map(game, "Map must have 1P, 1E and at least 1C"));
 	if (find_player(game) == 1)
 		return (fail_map(game, "Player position not found"));
-	/* plus tard : if (check_path(game) == 1) return (fail_map(game, "Invalid path")); */
+	if (check_path(game) == 1)
+		return (fail_map(game, "Invalid path"));
 	return (0);
 }
 
@@ -51,9 +52,8 @@ static void	init_game(t_game *g)
 	g->moves = 0;
 	g->collectibles_total = 0;
 	g->collectibles_left = 0;
-	g->player_x = 0;
-	g->player_y = 0;
+	g->px = 0;
+	g->py = 0;
 	g->map_width = 0;
 	g->map_height = 0;
 }
-

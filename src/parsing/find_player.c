@@ -1,42 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   find_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2026/03/01 19:25:24 by cmauley           #+#    #+#             */
+/*   Updated: 2026/03/01 21:42:34 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /**
- * @brief libère un tableau de chaînes alloué dynamiquement
+ * @brief parcourt la map et stocke la position 
+ * du joueur 'P' dans game->px/py
  */
-void	free_tab(char **tab)
+int	find_player(t_game *game)
 {
-	int	i;
+	int		x;
+	int		y;
+	char	**map;
 
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
+	y = 0;
+	if (!game)
+		return (1);
+	map = game->map;
+	while (map[y])
 	{
-		free(tab[i]);
-		i++;
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'P')
+			{
+				game->px = x;
+				game->py = y;
+				return (0);
+			}
+			x++;
+		}
+		y++;
 	}
-	free(tab);
-}
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
-{
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
+	return (1);
 }

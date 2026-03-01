@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/14 23:18:34 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/14 23:28:37 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int	i;
+	unsigned int	i;
 
-	if (!tab)
-		return ;
 	i = 0;
-	while (tab[i])
+	while (s[i])
 	{
-		free(tab[i]);
+		(*f)(i, &s[i]);
 		i++;
 	}
-	free(tab);
-}
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
-{
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
 }

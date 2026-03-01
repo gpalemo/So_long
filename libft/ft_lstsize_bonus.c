@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/16 22:31:31 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/20 19:45:24 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	t_list	*tmp;
+	int		i;
 
-	if (!tab)
-		return ;
+	tmp = lst;
 	i = 0;
-	while (tab[i])
+	if (!lst)
+		return (0);
+	while (tmp)
 	{
-		free(tab[i]);
+		tmp = tmp->next;
 		i++;
 	}
-	free(tab);
-}
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
-{
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
+	return (i);
 }

@@ -1,42 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/16 22:57:10 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/20 20:09:53 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int	i;
+	t_list	*last;
 
-	if (!tab)
+	if (!lst || !new)
 		return ;
-	i = 0;
-	while (tab[i])
+	if (*lst == NULL)
 	{
-		free(tab[i]);
-		i++;
+		*lst = new;
+		return ;
 	}
-	free(tab);
+	last = ft_lstlast(*lst);
+	last->next = new;
 }
-
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
+/*int	main()
 {
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
-}
+	t_list	*a = ft_lstnew("hello");
+	t_list	*b = ft_lstnew("world");
+	t_list	*c = ft_lstnew("42");
+
+	a->next = b;
+	ft_lstadd_back(&a, c);
+	printf("%s\n",(char *)a->next->next->content);
+	return(0);
+}*/

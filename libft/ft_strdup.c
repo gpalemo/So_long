@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 18:53:54 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:44 by cmauley          ###   ########.fr       */
+/*   Created: 2025/10/06 23:13:43 by cmauley           #+#    #+#             */
+/*   Updated: 2025/10/07 21:54:05 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "libft.h"
 
-/**
- * @brief libère un tableau de chaînes alloué dynamiquement
- */
-void	free_tab(char **tab)
+char	*ft_strdup(const char *src)
 {
-	int	i;
+	char	*dest;
 
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	dest = (char *) malloc(ft_strlen(src) + 1);
+	if (!dest)
+		return (NULL);
+	ft_memcpy(dest, src, ft_strlen(src) + 1);
+	return (dest);
 }
 
-/**
- * @brief libère la map, affiche l'erreur et retourne 1
- */
-int	fail_map(t_game *g, char *msg)
+/*int	main(void)
 {
-	if (g->map)
-		free_tab(g->map);
-	g->map = NULL;
-	return (write_error(msg));
-}
+	char	*src = "Hello World";
+	char	*copy;
+
+	copy = ft_strdup(src);
+	printf("Source = %s\n", src);
+	printf("Copie = %s\n", copy);
+
+	free(copy);
+	return (0);
+}*/

@@ -6,11 +6,15 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:02:43 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 18:19:03 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 21:40:43 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
+
+static int	add_line(char **content, char *line);
+static int	read_file_to_string(int fd, char **out);
+static int	split_and_store(t_game *game, char *content);
 
 /**
  * @brief lit le fd, découpe en tableau de lignes et valide la forme
@@ -34,26 +38,9 @@ int	read_map(int fd, t_game *game)
 }
 
 /**
- * @brief prend la ligne lue, l’ajoute et nettoie la
- * mémoire (juste pour gagner de la place dans read_file_to_string)
- */
-static int	add_line(char **content, char *line)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*content, line);
-	free(*content);
-	free(line);
-	if (!tmp)
-		return (1);
-	*content = tmp;
-	return (0);
-}
-
-/**
  * @brief lire tout le fichier dans une seule string
  */
-int	read_file_to_string(int fd, char **out)
+static int	read_file_to_string(int fd, char **out)
 {
 	char	*content;
 	char	*line;
@@ -76,9 +63,26 @@ int	read_file_to_string(int fd, char **out)
 }
 
 /**
+ * @brief prend la ligne lue, l’ajoute et nettoie la
+ * mémoire (juste pour gagner de la place dans read_file_to_string)
+ */
+static int	add_line(char **content, char *line)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*content, line);
+	free(*content);
+	free(line);
+	if (!tmp)
+		return (1);
+	*content = tmp;
+	return (0);
+}
+
+/**
  * @brief split et stocke dans game->map
  */
-int	split_and_store(t_game *game, char *content)
+static int	split_and_store(t_game *game, char *content)
 {
 	game->map = ft_split(content, '\n');
 	free(content);
@@ -86,7 +90,3 @@ int	split_and_store(t_game *game, char *content)
 		return (1);
 	return (0);
 }
-
-
-
-

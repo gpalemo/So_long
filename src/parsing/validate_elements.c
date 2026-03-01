@@ -6,11 +6,12 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:50:49 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 18:11:38 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/01 21:41:51 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
+
 static int	count_nb_char(char **map, char c);
 static int	map_wall_check(char *line);
 
@@ -28,8 +29,8 @@ int	check_char(char **map)
 		i = 0;
 		while (map[j][i])
 		{
-			if (map[j][i] != '0' && map[j][i] != '1' 
-				&& map[j][i] != 'C' && map[j][i] != 'E' 
+			if (map[j][i] != '0' && map[j][i] != '1'
+				&& map[j][i] != 'C' && map[j][i] != 'E'
 				&& map[j][i] != 'P')
 				return (1);
 			i++;
@@ -44,8 +45,8 @@ int	check_char(char **map)
  */
 int	check_nb_char_and_stock_coll(t_game *game)
 {
-	int c_count;
-	
+	int	c_count;
+
 	if (count_nb_char(game->map, 'P') != 1)
 		return (1);
 	if (count_nb_char(game->map, 'E') != 1)
@@ -65,8 +66,8 @@ static int	count_nb_char(char **map, char c)
 {
 	int	i;
 	int	j;
-	int nb;
-	
+	int	nb;
+
 	nb = 0;
 	j = 0;
 	while (map[j])
@@ -88,8 +89,8 @@ static int	count_nb_char(char **map, char c)
  */
 int	wall_check(char **map)
 {
-	int j;
-	int len;
+	int	j;
+	int	len;
 
 	len = ft_strlen(map[0]) - 1;
 	j = 1;
@@ -111,7 +112,7 @@ int	wall_check(char **map)
  */
 static int	map_wall_check(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -122,4 +123,3 @@ static int	map_wall_check(char *line)
 	}
 	return (0);
 }
-
