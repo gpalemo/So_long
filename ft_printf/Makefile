@@ -6,7 +6,7 @@
 #    By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 23:20:02 by cmauley           #+#    #+#              #
-#    Updated: 2025/10/30 23:31:29 by cmauley          ###   ########.fr        #
+#    Updated: 2026/03/02 17:51:28 by cmauley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # fichiers sources .c
-SRC =	ft_printf.c ft_putstr.c ft_putchar.c ft_putnbr.c \
-		ft_putunbr.c ft_putptr.c ft_puthex.c
+SRC =	src/ft_printf.c src/ft_putstr.c src/ft_putchar.c src/ft_putnbr.c \
+		src/ft_putunbr.c src/ft_putptr.c src/ft_puthex.c
 
 # Liste des fichiers objets (.o) générés à partir des .c
 # (remplace l’extension .c par .o automatiquement)
@@ -43,7 +43,7 @@ $(NAME):	$(OBJ)
 # $< = nom du fichier source
 # -o $@ = nom du fichier de sortie
 %.o:	%.c
-		$(CC) $(CFLAGS) -c $< -o $@
+		$(CC) $(CFLAGS) -I include -c $< -o $@
 
 # Supprime tous les fichiers objets (.o)
 clean:

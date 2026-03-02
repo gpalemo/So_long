@@ -10,7 +10,8 @@
 	4. [Partie graphique](#partie-graphique)
 2. [Checklist (TODO)](#checklist-todo)
 	1. [Parsing](#1parsing)
-	2. [Vérification du chemin (algo Flood Fill)](#2-vérification-du-chemin-algo-flood-fill)
+	2. [Vérification du chemin](#2-vérification-du-chemin)
+		- [Algo "Flood Fill"](#algo-flood-fill)
 	3. [Initialisation graphique](#3-initialisation-graphique)
 	4. [Affichage de la map (Rendering)](#4-affichage-de-la-map-rendering)
 	5. [Gestion des déplacements](#5-gestion-des-déplacements)
@@ -120,14 +121,58 @@ Lire le fichier `.ber` :
 - stocker dans un `char **`
 - vérifier toutes les règles de validité (**map valide?**)
 
-## 2. Vérification du chemin (algo Flood Fill)
+## 2. Vérification du chemin
 But :  
 Vérifier que le joueur peut atteindre :
 
 - tous les collectibles
 - la sortie
 
-On fait une copie de la map et on “remplit” depuis `P`
+Fait une copie de la map (pour ne pas la modifier) et “remplit” de '.' depuis `P`.
+
+### Algo "Flood Fill"
+
+**Flood fill** = “remplir une zone” à partir d’un point de départ, en se propageant dans les 4 directions (haut/bas/gauche/droite), sans traverser les murs.
+
+Dans so_long, on l’utilise pour répondre à la question :
+
+- *Depuis la position du joueur P, est-ce que je peux atteindre tous les C et la sortie E ?*
+
+La fonction reçoit :
+
+- y, x : une case actuelle
+- copy : la map copiée
+- game->map_width/map_height : limites
+
+<pre>
+void	flood_fill(t_game *game, char **copy, int y, int x)
+{
+	if (x < 0 || y < 0 || x >= game->map_width || y >= game->map_height)
+		return ;
+	if (copy[y][x] == '1')
+		return ;
+	if (copy[y][x] == '.')
+		return ;
+	else
+	{
+		copy[y][x] = '.';
+		flood_fill(game, copy, y + 1, x); // En bas
+		flood_fill(game, copy, y - 1, x); // En haut
+		flood_fill(game, copy, y, x + 1); // A droite
+		flood_fill(game, copy, y, x - 1); // A gauche
+	}
+}
+</pre>
+
+**C'est du `DFS` (Depth-First). Il va au bout dans la première direction avant d'essayer les autres. Il ne passe à "HAUT" que quand "BAS" est entièrement épuisé, il plonge toujours vers le bas en premier, et ne "remonte" vers une direction précédente que quand le bas est un cul-de-sac (mur ou case déjà visitée).**
+
+
+| Condition | Raison |
+|-----------|--------|
+| `x < 0` ou hors limites | On sort de la map |
+| `copy[y][x] == '1'` | C'est un mur |
+| `copy[y][x] == '.'` | Déjà visité → évite les boucles infinies |
+
 
 ## 3. Initialisation graphique
 
