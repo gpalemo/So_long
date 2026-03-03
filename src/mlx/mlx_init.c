@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 16:56:30 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/02 18:12:30 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/03 22:57:11 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
  */
 int	init_mlx(t_game *game)
 {
-	int w;
-	int h;
+	int	w;
+	int	h;
 
 	w = game->map_width * TILE;
 	h = game->map_height * TILE;

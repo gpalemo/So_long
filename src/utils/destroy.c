@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:39:35 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/02 22:44:07 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/03 22:59:16 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	clean_exit(t_game *game, int status)
 		mlx_destroy_image(game->mlx, game->tex.player.img);
 	if (game->tex.exit.img)
 		mlx_destroy_image(game->mlx, game->tex.exit.img);
-	if (game->tex.collectible.img)
-		mlx_destroy_image(game->mlx, game->tex.collectible.img);
+	if (game->tex.collec.img)
+		mlx_destroy_image(game->mlx, game->tex.collec.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

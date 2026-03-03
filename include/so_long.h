@@ -6,14 +6,14 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 22:07:13 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/02 23:02:45 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/03 23:10:42 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#  define TILE 64
+# define TILE 64
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -45,7 +45,7 @@ typedef struct s_textures
 	t_img	wall;
 	t_img	player;
 	t_img	exit;
-	t_img	collectible;
+	t_img	collec;
 }			t_textures;
 
 typedef struct s_game
