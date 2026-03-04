@@ -6,28 +6,21 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:39:35 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/03 22:59:16 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/04 00:06:57 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
+static void	destroy_textures(t_game *game);
+
 /**
  * @brief Libère toutes les ressources MLX et la map,
- * puis quitte le programme avec le code de sortie donné.
+ * puis quitte le programme.
  */
 int	clean_exit(t_game *game, int status)
 {
-	if (game->tex.floor.img)
-		mlx_destroy_image(game->mlx, game->tex.floor.img);
-	if (game->tex.wall.img)
-		mlx_destroy_image(game->mlx, game->tex.wall.img);
-	if (game->tex.player.img)
-		mlx_destroy_image(game->mlx, game->tex.player.img);
-	if (game->tex.exit.img)
-		mlx_destroy_image(game->mlx, game->tex.exit.img);
-	if (game->tex.collec.img)
-		mlx_destroy_image(game->mlx, game->tex.collec.img);
+	destroy_textures(game);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
@@ -38,6 +31,26 @@ int	clean_exit(t_game *game, int status)
 	if (game->map)
 		free_tab(game->map);
 	exit(status);
+}
+
+static void	destroy_textures(t_game *game)
+{
+	if (game->tex.floor.img)
+		mlx_destroy_image(game->mlx, game->tex.floor.img);
+	if (game->tex.wall.img)
+		mlx_destroy_image(game->mlx, game->tex.wall.img);
+	if (game->tex.exit.img)
+		mlx_destroy_image(game->mlx, game->tex.exit.img);
+	if (game->tex.collec.img)
+		mlx_destroy_image(game->mlx, game->tex.collec.img);
+	if (game->tex.player_d.img)
+		mlx_destroy_image(game->mlx, game->tex.player_d.img);
+	if (game->tex.player_u.img)
+		mlx_destroy_image(game->mlx, game->tex.player_u.img);
+	if (game->tex.player_l.img)
+		mlx_destroy_image(game->mlx, game->tex.player_l.img);
+	if (game->tex.player_r.img)
+		mlx_destroy_image(game->mlx, game->tex.player_r.img);
 }
 
 /**

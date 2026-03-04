@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 17:30:35 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:27 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/03 23:35:53 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ static void	init_game(t_game *g)
 	g->py = 0;
 	g->map_width = 0;
 	g->map_height = 0;
+	g->dir = DIR_DOWN;
 }

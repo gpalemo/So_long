@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 17:56:53 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/01 21:45:56 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/04 01:39:54 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static void	flood_fill(t_game *game, char **copy, int y, int x)
 {
 	if (x < 0 || y < 0 || x >= game->map_width || y >= game->map_height)
 		return ;
+	if (copy[y][x] == 'E')
+		copy[y][x] = '1';
 	if (copy[y][x] == '1')
 		return ;
 	if (copy[y][x] == '.')

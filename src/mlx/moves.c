@@ -6,13 +6,14 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 22:05:31 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/02 23:51:13 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/04 00:18:43 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 static void	apply_move(t_game *game, int nx, int ny);
+static void	update_dir(t_game *game, int dx, int dy);
 
 /**
  * @brief Vérifie si le déplacement est possible puis l'applique et
@@ -37,6 +38,7 @@ void	move_player(t_game *game, int dx, int dy)
 		win = 1;
 	if (tile == 'C')
 		game->collectibles_left--;
+	update_dir(game, dx, dy);
 	apply_move(game, nx, ny);
 	if (win == 1)
 	{
@@ -56,6 +58,20 @@ static void	apply_move(t_game *game, int nx, int ny)
 	game->px = nx;
 	game->py = ny;
 	game->moves++;
-	ft_printf("Moves : %d\n", game->moves);
 	render_map(game);
+}
+
+/**
+ * @brief Met à jour la direction du joueur
+ */
+static void	update_dir(t_game *game, int dx, int dy)
+{
+	if (dx == 1)
+		game->dir = DIR_RIGHT;
+	else if (dx == -1)
+		game->dir = DIR_LEFT;
+	else if (dy == 1)
+		game->dir = DIR_DOWN;
+	else if (dy == -1)
+		game->dir = DIR_UP;
 }

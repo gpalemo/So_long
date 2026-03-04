@@ -6,7 +6,7 @@
 /*   By: cmauley <cmauley@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 22:07:13 by cmauley           #+#    #+#             */
-/*   Updated: 2026/03/03 23:10:42 by cmauley          ###   ########.fr       */
+/*   Updated: 2026/03/04 01:27:48 by cmauley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define SO_LONG_H
 
 # define TILE 64
+
+# define DIR_DOWN 0
+# define DIR_UP 1
+# define DIR_LEFT 2
+# define DIR_RIGHT 3
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -43,7 +48,10 @@ typedef struct s_textures
 {
 	t_img	floor;
 	t_img	wall;
-	t_img	player;
+	t_img	player_d;
+	t_img	player_u;
+	t_img	player_l;
+	t_img	player_r;
 	t_img	exit;
 	t_img	collec;
 }			t_textures;
@@ -60,6 +68,7 @@ typedef struct s_game
 	int			moves;
 	int			collectibles_total;
 	int			collectibles_left;
+	int			dir;
 	t_textures	tex;
 }				t_game;
 
