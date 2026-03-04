@@ -149,6 +149,8 @@ void	flood_fill(t_game *game, char **copy, int y, int x)
 {
 	if (x < 0 || y < 0 || x >= game->map_width || y >= game->map_height)
 		return ;
+	if (copy[y][x] == 'E')
+		copy[y][x] = '1';
 	if (copy[y][x] == '1')
 		return ;
 	if (copy[y][x] == '.')

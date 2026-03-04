@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# define TILE 64
+# define TILE 128
 
 # define DIR_DOWN 0
 # define DIR_UP 1
